@@ -1,0 +1,4 @@
+app.post('/mine', async (req, res) => {
+  console.log('Requête de minage reçue:', req.body); // Doit s'afficher
+  // ... reste du code
+});

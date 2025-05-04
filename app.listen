@@ -1,0 +1,9 @@
+const Blockchain = require('./server/blockchain.js');
+const blockchain = new Blockchain(gun);
+
+// Route pour démarrer le minage
+app.post('/mine', express.json(), async (req, res) => {
+  const spaceMB = req.body.spaceMB || 0;
+  await blockchain.mineBlock(spaceMB);
+  res.sendStatus(200);
+});

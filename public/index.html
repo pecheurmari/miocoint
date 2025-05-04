@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>MioCoint</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="dark-mode">
+  <div class="container">
+    <h1>🪙 MioCoint Wallet</h1>
+    
+    <div class="balance">
+      Solde : <span id="balance">0</span> MIO
+    </div>
+
+    <div class="controls">
+      <input 
+        type="number" 
+        id="spaceMB" 
+        placeholder="Espace disque (MB)" 
+        value="100"
+        min="1"
+      >
+      <button onclick="startMining()">⛏️ Démarrer minage</button>
+    </div>
+
+    <div class="blocks">
+      <h3>Derniers blocs :</h3>
+      <div id="blocks"></div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="/lib/gun.js"></script>
+  <script src="wallet.js"></script>
+</body>
+</html>

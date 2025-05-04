@@ -1,0 +1,46 @@
+name: Deploy MioCoint to LWS
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Étape 1 : Récupérer le code
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Étape 2 : Installer Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.x
+
+      # Étape 3 : Installer les dépendances
+      - name: Install dependencies
+        run: |
+          cd frontend
+          npm install
+          
+      # Étape 4 : Build du projet
+      - name: Build project
+        run: |
+          cd frontend
+          npm run build
+
+      # Étape 5 : Déployer via SSH
+      - name: Deploy to LWS
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.LWS_IP }}
+          username: ${{ secrets.LWS_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            cd /var/www/miocoint
+            git pull origin main
+            npm install --production
+            pm2 restart miocoint
+            sudo systemctl reload nginx
